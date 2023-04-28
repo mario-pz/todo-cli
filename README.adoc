@@ -1,0 +1,27 @@
+= TodoGuru
+
+a clean and intuitive user interface that allows users to create and manage to-do list and track progress. 
+
+== Why TodoGuru?
+It was created as part of a university project for Professor Anagnostopoulos' software engineering course. 
+The goal of the project was to create a task management application using modern web technologies and best practices in software engineering.
+
+== Tasks
+
+=== Coding (Marios)
+- Implement the CLI 
+- Implement the API 
+- Database design & configuration
+
+=== Dockerization and Compose Tasks (Katerina)
+- Create a Dockerfile for the CLI service 
+- Create a Dockerfile for the API service 
+- Create a Dockerfile for the database service 
+- Create a docker-compose.yml file to orchestrate the containers 
+
+=== Presentation Tasks
+- Prepare a presentation about the task management application
+- Create slides and visuals for the presentation
+
+== License
+This project is licensed under the LGPL.

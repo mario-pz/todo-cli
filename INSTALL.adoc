@@ -1,0 +1,28 @@
+= TodoGuru Installation Guide
+
+== Prerequisites
+
+Before you can install TodoGuru, you'll need to make sure you have the following software installed on your machine:
+
+- Docker
+- Docker Compose
+
+== Installation Steps
+
+Follow these steps to install and run TodoGuru on your machine:
+
+1. Clone the repository:
+$ git clone 
+
+
+2. Navigate to the project directory:
+
+$ cd <project_directory>
+
+3. Build the Docker images:
+
+$ docker-compose build
+
+4. Start the containers:
+
+$ docker-compose up -d

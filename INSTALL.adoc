@@ -11,13 +11,13 @@ Before you can install TodoGuru, you'll need to make sure you have the following
 
 Follow these steps to install and run TodoGuru on your machine:
 
-1. Clone the repository:
-$ git clone 
+1. Clone the repository
 
+$ git clone https://github.com/mario-pz/todo-guru.git 
 
 2. Navigate to the project directory:
 
-$ cd <project_directory>
+$ cd todo-guru
 
 3. Build the Docker images:
 

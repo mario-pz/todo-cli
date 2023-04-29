@@ -1,0 +1,23 @@
+version: "3.9"
+
+# Make a simple network here, no need drivers or subnets
+
+services:
+  # For every service I want you to make it **depend** on mariadb
+  cli:
+    # TODO: Add build configuration
+    # TODO: Add network configuration
+    # TODO: Add environment variable configuration
+    # TODO: Add dependency configuration
+    # cli I suppose could also depend on api as well
+
+  api:
+    # TODO: Add build configuration
+    # TODO: Add network configuration
+    # TODO: Add environment variable configuration
+    # TODO: Add dependency configuration
+
+  mariadb:
+    # TODO: Add image configuration (mariadb:10.6)
+    # TODO: Add network configuration
+    # TODO: Add env variables for maria db username, database, password (check api/db.go for creds)

@@ -19,7 +19,6 @@ It was created as part of a university project for Professor Anagnostopoulos' Cl
 
 === Presentation Tasks
 - Prepare a presentation about the task management application
-- Create slides and visuals for the presentation
 
 == License
 This project is licensed under the LGPL.

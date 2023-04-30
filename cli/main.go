@@ -2,25 +2,16 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 func main() {
-	program := tea.NewProgram(initialModel)
-	if err := program.Start(); err != nil {
+	menu := MakeMenu()
+	p := tea.NewProgram(menu)
+	if err := p.Start(); err != nil {
 		fmt.Println("Error running program:", err)
+		os.Exit(1)
 	}
-}
-
-func initialModel() tea.Model {
-	return "Hello, World!"
-}
-
-func update(msg tea.Msg, model tea.Model) (tea.Model, tea.Cmd) {
-	return model, nil
-}
-
-func view(model tea.Model) string {
-	return fmt.Sprintf("  %v\n\n", model)
 }

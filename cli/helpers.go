@@ -5,7 +5,17 @@ import (
 	"encoding/json"
 	"net/http"
 	"regexp"
+
+	"github.com/gdamore/tcell/v2"
 )
+
+var hoverColor = tcell.NewRGBColor(0, 0, 255)
+
+var colors = []tcell.Color{
+	tcell.NewRGBColor(255, 0, 0),
+	tcell.NewRGBColor(50, 205, 50),
+	tcell.NewRGBColor(241, 247, 64),
+}
 
 func checkRegex(email string) bool {
 	regex := regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)

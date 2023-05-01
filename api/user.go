@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -44,6 +45,8 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 		}{
 			UserID: userID,
 		}
+
+		log.Printf("User %s just registered!\n", user.Username)
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
@@ -88,6 +91,8 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
+		log.Printf("User %s has logged in.\n", user.Username)
 
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")

@@ -8,7 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func connectDB() *sql.DB {
+func ConnectDB() *sql.DB {
 	// TODO: This will be replaced with environment variables
 	var driver = "mysql"
 	var user = "user"

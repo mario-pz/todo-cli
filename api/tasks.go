@@ -15,7 +15,7 @@ type Task struct {
 	Completed   bool   `json:"completed"`
 }
 
-func createTask(db *sql.DB) http.HandlerFunc {
+func CreateTask(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var task Task
 		err := json.NewDecoder(r.Body).Decode(&task)
@@ -57,7 +57,7 @@ func createTask(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-func deleteTask(db *sql.DB) http.HandlerFunc {
+func DeleteTask(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(r.URL.Query().Get("id"))
 		if err != nil {
@@ -82,5 +82,48 @@ func deleteTask(db *sql.DB) http.HandlerFunc {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
+	}
+}
+
+func GatherTasks(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID, err := strconv.Atoi(r.URL.Query().Get("user_id"))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		query := "SELECT id, user_id, description, completed FROM tasks WHERE user_id=?"
+		rows, err := db.Query(query, userID)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer rows.Close()
+
+		tasks := []Task{}
+		for rows.Next() {
+			var task Task
+			err = rows.Scan(&task.ID, &task.UserID, &task.Description, &task.Completed)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			tasks = append(tasks, task)
+		}
+		if err = rows.Err(); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		response, err := json.Marshal(tasks)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(response)
 	}
 }

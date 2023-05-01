@@ -11,7 +11,7 @@ type User struct {
 	Password string `json:"password"`
 }
 
-func registerHandler(db *sql.DB) http.HandlerFunc {
+func RegisterHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user User
 		err := json.NewDecoder(r.Body).Decode(&user)
@@ -51,7 +51,7 @@ func registerHandler(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-func loginHandler(db *sql.DB) http.HandlerFunc {
+func LoginHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user User
 		err := json.NewDecoder(r.Body).Decode(&user)

@@ -4,17 +4,17 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func ConnectDB() *sql.DB {
-	// TODO: This will be replaced with environment variables
 	var driver = "mysql"
-	var user = "user"
-	var password = "bingus"
-	var database = "tododb"
-	var databaseHost = "0000:3306"
+	var user = os.Getenv("MYSQL_USER")
+	var password = os.Getenv("MYSQL_PASSWORD")
+	var database = os.Getenv("MYSQL_DATABASE")
+	var databaseHost = os.Getenv("MYSQL_HOST") + ":3306"
 
 	var link = fmt.Sprintf("%s:%s@tcp(%s)/%s", user, password, databaseHost, database)
 

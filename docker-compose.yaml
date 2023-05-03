@@ -2,53 +2,37 @@ version: "3.9"
 
 networks:
   cloudlab-network:
-    external: false
-    driver: default
-
 
 services:
-  # For every service I want you to make it **depend** on mariadb
-  cli:
-    build: cli 
-    container_name: todo-cli 
-    networks: 
-      - cloudlab-networks
-    depends_on:
-      - mariadb
-      - api
-
   api:
-    build: api 
+    build: api
     hostname: api
     container_name: todo-api
     restart: on-failure
-   
-    environment: 
+    environment:
       MYSQL_ROOT_PASSWORD: floppa_is_the_best
       MYSQL_DATABASE: tododb
       MYSQL_USER: user
       MYSQL_PASSWORD: bingus
+      MYSQL_HOST: mariadb
 
-    ports: 
+    ports:
       - "8080:8080"
-    networks: 
-      - cloudlab-networks
+    networks:
+      - cloudlab-network
     depends_on:
       - mariadb
 
   mariadb:
     image: mariadb:10.6
-    environment: 
+    environment:
       MYSQL_ROOT_PASSWORD: floppa_is_the_best
       MYSQL_DATABASE: tododb
       MYSQL_USER: user
       MYSQL_PASSWORD: bingus
-    
-    volumes: 
+    volumes:
       - ./db:/docker-entrypoint-initdb.d
-    
-    ports: 
+    ports:
       - "3306:3306"
-    networks: 
-      - cloudlab-networks
-
+    networks:
+      - cloudlab-network

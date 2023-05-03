@@ -1,23 +1,54 @@
 version: "3.9"
 
-# Make a simple network here, no need drivers or subnets
+networks:
+  cloudlab-network:
+    external: false
+    driver: default
+
 
 services:
   # For every service I want you to make it **depend** on mariadb
   cli:
-    # TODO: Add build configuration
-    # TODO: Add network configuration
-    # TODO: Add environment variable configuration
-    # TODO: Add dependency configuration
-    # cli I suppose could also depend on api as well
+    build: cli 
+    container_name: todo-cli 
+    networks: 
+      - cloudlab-networks
+    depends_on:
+      - mariadb
+      - api
 
   api:
-    # TODO: Add build configuration
-    # TODO: Add network configuration
-    # TODO: Add environment variable configuration
-    # TODO: Add dependency configuration
+    build: api 
+    hostname: api
+    container_name: todo-api
+    restart: on-failure
+   
+    environment: 
+      MYSQL_ROOT_PASSWORD: floppa_is_the_best
+      MYSQL_DATABASE: tododb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: bingus
+
+    ports: 
+      - "8080:8080"
+    networks: 
+      - cloudlab-networks
+    depends_on:
+      - mariadb
 
   mariadb:
-    # TODO: Add image configuration (mariadb:10.6)
-    # TODO: Add network configuration
-    # TODO: Add env variables for maria db username, database, password (check api/db.go for creds)
+    image: mariadb:10.6
+    environment: 
+      MYSQL_ROOT_PASSWORD: floppa_is_the_best
+      MYSQL_DATABASE: tododb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: bingus
+    
+    volumes: 
+      - ./db:/docker-entrypoint-initdb.d
+    
+    ports: 
+      - "3306:3306"
+    networks: 
+      - cloudlab-networks
+

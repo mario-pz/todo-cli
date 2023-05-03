@@ -47,7 +47,6 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		log.Printf("User %s just registered!\n", user.Username)
-
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		json.NewEncoder(w).Encode(response)

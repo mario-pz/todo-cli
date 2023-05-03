@@ -26,8 +26,7 @@ INSERT INTO users (username, password) VALUES
     ('jdoe', 'abc123'),
     ('asmith', 'qwerty'),
     ('krogers', 'mypassword'),
-    ('davidmartinez', 'letmein');
-
+    ('davidmartinez@yahoo.gr', 'letmein');
 
 INSERT INTO tasks (user_id, description, completed) VALUES 
     (1, 'Buy groceries', false),

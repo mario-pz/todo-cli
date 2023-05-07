@@ -49,7 +49,7 @@ Our API is built using the powerful and lightweight chi router,
 which is a popular minimalist choice. We will be creating several endpoints that allow users to interact with our application,
 including the ability to register, log in, create, delete and update tasks.
 
-image::https://katcipis.github.io/img/gohacking.jpg[Gophers]
+image::https://katcipis.github.io/img/gohacking.jpg[width=40%, align=center]
 
 Our API is designed to be efficient and scalable, with a focus on simplicity and ease of use. The use of HTTP methods such as POST, DELETE, PATCH, and GET 
 allow for clear and concise communication between the client and the server, while maintaining RESTful principles.

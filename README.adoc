@@ -14,7 +14,6 @@ It was created as part of a university project for Professor Anagnostopoulos' Cl
 === Dockerization and Compose Tasks (Katerina)
 - Create a Dockerfile for the CLI service 
 - Create a Dockerfile for the API service 
-- Create a Dockerfile for the database service 
 - Create a docker-compose.yml file to orchestrate the containers 
 
 === Presentation Tasks

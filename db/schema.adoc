@@ -1,0 +1,32 @@
+//  asciidoctor -r asciidoctor-diagram input.adoc
+
+[plantuml, db-schema]
+----
+@startuml
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+!define unique(x) <color #00aa00>x</color>
+!define foreign_key(x) <color #0000ff>x</color>
+!define index(x) <color #00aaaa>x</color>
+!define column(x) x
+hide methods
+hide stereotypes
+
+Table(users, "users") {
+  +primary_key(id):int [autoincrement]
+  +unique(username):varchar(255) [not null]
+  +password:varchar(255) [not null]
+}
+
+Table(tasks, "tasks") {
+  +primary_key(id):int [autoincrement]
+  +user_id:int [not null]
+  +description:varchar(255) [not null]
+  +completed:bool [not null, default=false]
+  +created_at:timestamp [not null, default=current_timestamp]
+  +updated_at:timestamp [not null, default=current_timestamp on update current_timestamp]
+}
+
+users }o-|| tasks : has many
+@enduml
+----

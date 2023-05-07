@@ -1,5 +1,7 @@
 FROM golang:1.20.3-alpine3.17
 
+RUN apk add ncurses
+
 WORKDIR /app
 
 COPY go.mod .
@@ -11,6 +13,7 @@ RUN go mod download
 COPY . .
 
 RUN go build -o todo-cli
+
 
 EXPOSE 8080
 

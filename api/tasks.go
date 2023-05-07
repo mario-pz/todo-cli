@@ -57,6 +57,43 @@ func CreateTask(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+func UpdateTask(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		taskID, err := strconv.Atoi(r.URL.Query().Get("id"))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		var task Task
+		task.ID = taskID
+
+		err = json.NewDecoder(r.Body).Decode(&task)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		query := "UPDATE tasks SET description = ? WHERE id = ?"
+
+		_, err = db.Exec(query, task.Description, task.ID)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		response, err := json.Marshal(task)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(response)
+	}
+}
+
 func DeleteTask(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(r.URL.Query().Get("id"))

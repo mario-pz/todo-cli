@@ -20,37 +20,39 @@
     function toggleTask(task) {
         task.completed = !task.completed;
         tasks = [...tasks];
+        updateProgressBar();
+    }
+
+    function updateProgressBar() {
+        let completedTasks = tasks.filter((task) => task.completed);
+        let percentCompleted = (completedTasks.length / tasks.length) * 100;
+        let progressBar = document.querySelector(".progress-bar");
+        progressBar.style.width = `${percentCompleted}%`;
+        progressBar.setAttribute("aria-valuenow", percentCompleted);
+
+        return percentCompleted;
     }
 </script>
 
-<h1>Your tasks:</h1>
-{#if tasks.length > 0}
-    <ul>
-        {#each tasks as task}
-            <li class="task">
-                <button
-                    style={task.completed
-                        ? "text-decoration: line-through;"
-                        : ""}
-                    on:click={() => toggleTask(task)}
-                >
-                    {task.description}
-                </button>
-            </li>
-        {/each}
+<div class="bg-danger d-flex align-items-center justify-content-center vh-100">
+    <ul class="list-unstyled text-center">
+        <h1>Your tasks:</h1>
+        {#if tasks.length > 0}
+            {#each tasks as task}
+                <li class="add-it-here mb-3">
+                    <button
+                        class="btn btn-danger"
+                        style={task.completed
+                            ? "text-decoration: line-through;"
+                            : ""}
+                        on:click={() => toggleTask(task)}
+                    >
+                        {task.description}
+                    </button>
+                </li>
+            {/each}
+        {:else}
+            <p>No tasks found.</p>
+        {/if}
     </ul>
-{:else}
-    <p>No tasks found.</p>
-{/if}
-
-<style>
-    .task {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 8px 0;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-</style>
+</div>

@@ -164,3 +164,52 @@ func GatherTasks(db *sql.DB) http.HandlerFunc {
 		w.Write(response)
 	}
 }
+
+func ToggleComplete(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id, err := strconv.Atoi(r.URL.Query().Get("id"))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		row := db.QueryRow(
+			"SELECT  id, user_id, description, completed FROM tasks WHERE id = ?",
+			id,
+		)
+
+		var task Task
+		err = row.Scan(&task.ID, &task.UserID, &task.Description, &task.Completed)
+
+		if err != nil {
+			if err == sql.ErrNoRows {
+				http.Error(w, "Task not found", http.StatusNotFound)
+			} else {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			return
+		}
+
+		task.Completed = !task.Completed
+
+		_, err = db.Exec(
+			"UPDATE tasks SET completed = ? WHERE id = ?",
+			task.Completed,
+			task.ID,
+		)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		response, err := json.Marshal(task)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(response)
+	}
+}

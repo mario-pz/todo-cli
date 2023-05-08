@@ -27,6 +27,7 @@ func main() {
 		r.Post("/register", RegisterHandler(db))
 		r.Post("/login", LoginHandler(db))
 		r.Post("/create_task", CreateTask(db))
+		r.Post("/toggle_task", ToggleComplete(db))
 		r.Delete("/delete_task", DeleteTask(db))
 		r.Patch("/update_task", UpdateTask(db))
 		r.Get("/gather_tasks", GatherTasks(db))

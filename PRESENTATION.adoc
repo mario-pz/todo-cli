@@ -37,11 +37,7 @@ This allows users to create accounts, login, and manage their own todo items.
 The client is an essential component of our application, as it provides the interface through which users can interact with our system. 
 It can take many forms, ranging from a traditional web interface to a command-line interface (CLI) or even a mobile app.
 
-In our case, we chose to build a terminal user interface (TUI) using the tview library for Go. 
-The TUI provides a highly productive and vim-like environment for interacting with our system,
-which can be especially appealing to power users and developers who prefer keyboard shortcuts and minimalistic interfaces.
-
-Overall, our goal with the client was to create an intuitive and efficient interface that would allow users to quickly and easily manage their tasks within our application.
+In our case, we made a basic web app using Svelte a new minimal framework.
 
 == Chapter 2: Building the API
 

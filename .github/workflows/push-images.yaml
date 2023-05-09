@@ -11,10 +11,6 @@ on:
       - 'main'
   workflow_dispatch:
 
-env:
-  DOCKER_IMAGE_NAME: webapp
-  DOCKER_REGISTRY: ghcr.io
-  DOCKER_IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   build-and-push:
@@ -31,7 +27,7 @@ jobs:
         with:
           context: ./web
           push: true
-          tags: ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          tags: ghcr.io/mario-pz/todo-guru-webapp:latest
           build-args: |
             BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
             VCS_REF=${{ github.sha }}

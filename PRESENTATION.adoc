@@ -117,3 +117,72 @@ Each endpoint will call a handler function that interacts with the database usin
 
 == Chapter 5: Compose the services 
 
+Our application has 3 Dockerfiles for each of its services, api, database and web. They were all written based on the official documentation and the examples our professor provided us. 
+
+* [Official documentation](https://docs.docker.com/engine/reference/builder/)
+* [Example 1](https://nodejs.org/en/docs/guides/nodejs-docker-webapp)
+* [Example 2](https://github.com/bbachi/dockerfile-examples)
+
+Below is an example of the Dockerfile of our api which creates its necessary Docker image: 
+
+[source, Dockerfile]
+----
+FROM golang:1.20.3-alpine3.17 
+
+WORKDIR /app
+
+COPY go.mod .
+
+COPY go.sum .
+
+RUN go mod download
+
+COPY . . 
+
+RUN go build -o todo-api
+
+EXPOSE 8080
+
+ENTRYPOINT [ "./todo-api" ]
+----
+
+For all our services we used the docker image golang:1.20.3-alpine3.17 and the main working directory /app. We then composed the services in a docker-compose file. 
+
+* [Official documentation](https://docs.docker.com/compose/)
+
+Inside the docker-compose file we can see that our application uses its own network, the cloudlab-network. 
+
+[source, yaml]
+----
+...
+networks:
+  cloudlab-network:
+
+  ....
+----
+
+The file also includes the three services as mentioned above. Below is a snippet of the web service in the compose file:
+
+[source, yaml]
+----
+web:
+    build: web
+    hostname: web
+    container_name: todo-web
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - cloudlab-network
+    depends_on:
+      - mariadb
+      - api 
+    mem_limit: 128M
+----
+
+Lastly, we made the necessary configurations in our compose file so the containers don't consume too much of the host machine's memory. This was done with the mem_limit flag. Our web container now 
+uses only 128Mb, our api 64Mb and our database 1Gb of memory. 
+
+
+
+

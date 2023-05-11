@@ -4,6 +4,20 @@ networks:
   cloudlab-network:
 
 services:
+  web:
+    build: web
+    hostname: web
+    container_name: todo-web
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - cloudlab-network
+    depends_on:
+      - mariadb
+      - api 
+    mem_limit: 128M
+
   api:
     build: api
     hostname: api
@@ -15,13 +29,13 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: bingus
       MYSQL_HOST: mariadb
-
     ports:
       - "8080:8080"
     networks:
       - cloudlab-network
     depends_on:
       - mariadb
+    mem_limit: 64M
 
   mariadb:
     image: mariadb:10.6
@@ -36,3 +50,4 @@ services:
       - "3306:3306"
     networks:
       - cloudlab-network
+    mem_limit: 1G

@@ -182,7 +182,3 @@ web:
 
 Lastly, we made the necessary configurations in our compose file so the containers don't consume too much of the host machine's memory. This was done with the mem_limit flag. Our web container now 
 uses only 128Mb, our api 64Mb and our database 1Gb of memory. 
-
-
-
-

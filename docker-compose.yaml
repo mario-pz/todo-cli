@@ -1,4 +1,4 @@
-version: "3.9"
+version: "2"
 
 networks:
   cloudlab-network:
@@ -9,8 +9,6 @@ services:
     hostname: web
     container_name: todo-web
     restart: on-failure
-    ports:
-      - "3000:3000"
     networks:
       - cloudlab-network
     depends_on:
@@ -29,8 +27,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: bingus
       MYSQL_HOST: mariadb
-    ports:
-      - "8080:8080"
     networks:
       - cloudlab-network
     depends_on:
@@ -46,14 +42,12 @@ services:
       MYSQL_PASSWORD: bingus
     volumes:
       - ./db:/docker-entrypoint-initdb.d
-    ports:
-      - "3306:3306"
     networks:
       - cloudlab-network
     mem_limit: 1G
 
   nginx:
-    image: nginx:latest
+    image: nginx:mainline-alpine3.17-slim
     container_name: todo-nginx
     restart: always
     ports:

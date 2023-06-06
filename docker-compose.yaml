@@ -15,7 +15,7 @@ services:
       - cloudlab-network
     depends_on:
       - mariadb
-      - api 
+      - api
     mem_limit: 128M
 
   api:
@@ -51,3 +51,15 @@ services:
     networks:
       - cloudlab-network
     mem_limit: 1G
+
+  nginx:
+    image: nginx:latest
+    container_name: todo-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - cloudlab-network
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
